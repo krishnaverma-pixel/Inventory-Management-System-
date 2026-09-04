@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Product {
+    int id;
+    string name;
+    int quantity;
+    float price;
+public:
+    void addProduct() {
+        cout << "Enter Product ID: ";
+        cin >> id;
+        cout << "Enter Product Name: ";
+        cin.ignore();
+        getline(cin, name);
+        cout << "Enter Quantity: ";
+        cin >> quantity;
+        cout << "Enter Price: ";
+        cin >> price;
+    }
+
+    void displayProduct() {
+        cout << "ID: " << id << ", Name: " << name 
+             << ", Quantity: " << quantity 
+             << ", Price: " << price << endl;
+    }
+
+    int getId() { return id; }
+};
+
+int main() {
+    Product inventory[50];
+    int n = 0, choice;
+
+    do {
+        cout << "\n--- Inventory Management System ---\n";
+        cout << "1. Add Product\n2. Display All\n3. Search by ID\n4. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1:
+                inventory[n].addProduct();
+                n++;
+                break;
+            case 2:
+                for(int i=0; i<n; i++)
+                    inventory[i].displayProduct();
+                break;
+            case 3: {
+                int pid;
+                cout << "Enter Product ID to search: ";
+                cin >> pid;
+                bool found = false;
+                for(int i=0; i<n; i++) {
+                    if(inventory[i].getId() == pid) {
+                        inventory[i].displayProduct();
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) cout << "Product not found!\n";
+                break;
+            }
+            case 4:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice!\n";
+        }
+    } while(choice != 4);
+
+    return 0;
+}
